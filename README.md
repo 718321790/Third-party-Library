@@ -13,3 +13,22 @@ function addNum(value) {
 String.prototype.add = addNum
 Number.prototype.add = addNum
 ```
+
+### 2.获取excel内容
+[xlsx](https://github.com/SheetJS/sheetjs)
+```
+var file = document.querySelector('#fileInput')
+file.addEventListener('change', function () {
+  var reader = new FileReader()
+  reader.onload = function (e) {
+    var bstr = e.target.result;
+    var wb = XLSX.read(bstr, {type:'binary'});
+    /* Get first worksheet */
+    var wsname = wb.SheetNames[0];
+    var ws = wb.Sheets[wsname];
+    /* Convert array of arrays */
+    var data = XLSX.utils.sheet_to_json(ws);
+  }
+  reader.readAsBinaryString(this.files[0]);
+})
+```
